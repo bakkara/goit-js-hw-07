@@ -29,15 +29,25 @@ function onClick(evt) {
     const galleryItem = evt.target.dataset.source;
     console.log(galleryItem)
 
-    const instance = basicLightbox.create(`
+    /* const instance = basicLightbox.create(`
     <img src="${galleryItem}" width="800" height="600">
-`);
+`) */
+  const instance = createModal(galleryItem);
     instance.show();
     galleryContainer.addEventListener('keydown', closeEscape);
-    function closeEscape(evt) {
-        if (evt.code === "Escape") {
+    
+function closeEscape(evt) {
+    if (evt.code === "Escape") {
             instance.close();
         }
+        galleryContainer.removeEventListener('keydown', closeEscape);
     }
 }
+
+function createModal(item) {
+    return basicLightbox.create(`
+    <img src="${item}" width="800" height="600">
+`);
+}
+
 
