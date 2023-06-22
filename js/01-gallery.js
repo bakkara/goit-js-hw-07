@@ -19,6 +19,7 @@ galleryContainer.insertAdjacentHTML('beforeend', markup)
 
 galleryContainer.addEventListener('click', onClick)
   
+let instance;
 function onClick(evt) {
     evt.preventDefault()
   
@@ -27,7 +28,15 @@ function onClick(evt) {
     }
   const galleryItem = evt.target.dataset.source;
 
-  const instance = basicLightbox.create(
+  instance = createModal(galleryItem);
+  instance.show();
+  
+
+}
+
+function createModal(galleryItem) {
+
+  return basicLightbox.create(
     `<img src="${galleryItem}" width="800" height="600">`,
     {
       onShow: () => {
@@ -37,45 +46,10 @@ function onClick(evt) {
         window.removeEventListener('keydown', closeEscape);
       }
     })
-  instance.show();
-   function closeEscape(evt) {
+}
+
+ function closeEscape(evt) {
     if (evt.code === "Escape") {
             instance.close();
         }
   }
-}
-
-
-// function onClick(evt) {
-//     evt.preventDefault()
-  
-//     if (evt.target.nodeName !== "IMG") {
-//         return;
-//     }
-//   const galleryItem = evt.target.dataset.source;
-
-//   const instance = createModal(galleryItem);
-//   instance.show();
-  
-
-// }
-
-// function createModal(galleryItem) {
-
-//   return basicLightbox.create(
-//     `<img src="${galleryItem}" width="800" height="600">`,
-//     {
-//       onShow: () => {
-//         window.addEventListener('keydown', closeEscape);
-//       },
-//       onClose: () => {
-//         window.removeEventListener('keydown', closeEscape);
-//       }
-//     })
-// }
-
-//  function closeEscape(evt) {
-//     if (evt.code === "Escape") {
-//             instance.close();
-//         }
-//   }
