@@ -25,29 +25,26 @@ function onClick(evt) {
     if (evt.target.nodeName !== "IMG") {
         return;
     }
-    console.log(evt.target.nodeName)
-    const galleryItem = evt.target.dataset.source;
-    console.log(galleryItem)
+  const galleryItem = evt.target.dataset.source;
 
-    /* const instance = basicLightbox.create(`
-    <img src="${galleryItem}" width="800" height="600">
-`) */
-  const instance = createModal(galleryItem);
-    instance.show();
-    galleryContainer.addEventListener('keydown', closeEscape);
-    
-function closeEscape(evt) {
+  const instance = basicLightbox.create(
+    `<img src="${galleryItem}" width="800" height="600">`,
+    {
+      onShow: () => {
+        window.addEventListener('keydown', closeEscape);
+      },
+     onClose: () => {
+      window.removeEventListener('keydown', closeEscape);
+      }
+    })
+  instance.show();
+  
+  function closeEscape(evt) {
     if (evt.code === "Escape") {
             instance.close();
         }
-        galleryContainer.removeEventListener('keydown', closeEscape);
     }
 }
 
-function createModal(item) {
-    return basicLightbox.create(`
-    <img src="${item}" width="800" height="600">
-`);
-}
 
 
